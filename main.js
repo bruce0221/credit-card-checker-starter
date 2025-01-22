@@ -25,7 +25,7 @@ const batch = [valid1, valid2, valid3, valid4, valid5, invalid1, invalid2, inval
 
 // Add your functions below:
 
-
+//identify valid or invalid card
 function validateCred(array) { 
     // this array is all the digit keep remain to add up
     let checkDigitFix = []; 
@@ -91,7 +91,35 @@ function findInvalidCards(arrays) {
 
 function idInvalidCardCompanies(arrays) { 
 
-    
+    let companies = [];
+
+    arrays.forEach( (item) => { 
+
+        if (item[0] === 3 ) { 
+            companies.push('Amex');
+        } else if (item[0] === 4) { 
+            companies.push('Visa');
+        } else if (item[0]=== 5) { 
+            companies.push('Mastercard');
+        } else if (item[0] === 6) { 
+            companies.push('Discover');
+        } else { 
+            companies.push('Company not found')
+        }
+    } );
+
+
+    const uniqueCompany = companies.reduce( (acc, item) => { 
+
+        if (!acc.includes(item)) { 
+
+            acc.push(item);
+        } 
+
+        return acc;
+    }, []);
+
+    return uniqueCompany;
 
 }
 
@@ -111,3 +139,4 @@ function idInvalidCardCompanies(arrays) {
 //findInvalidCards(batch);
 //console.log(findInvalidCards(batch));
 //console.log(JSON.stringify(findInvalidCards(batch)));
+console.log(idInvalidCardCompanies(findInvalidCards(batch)));
