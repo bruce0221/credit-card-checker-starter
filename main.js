@@ -199,12 +199,6 @@ function changeInvalidToValid (array){
         }
     }
 
-    if (!adjustment) { 
-
-
-
-    }
-
     console.log(array);
 
 
