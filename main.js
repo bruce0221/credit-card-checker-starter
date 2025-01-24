@@ -27,27 +27,33 @@ const batch = [valid1, valid2, valid3, valid4, valid5, invalid1, invalid2, inval
 
 //identify valid or invalid card
 function validateCred(array) { 
+
+    const reversedCheckArray = array.toReversed();
+
+    //console.log(reversedCheckArray);
+
     // this array is all the digit keep remain to add up
     let checkDigitFix = []; 
 
     // all digit need to double
     let checkDigitDouble = [] ; 
 
-    //filter element in array remain the same
-    for (let i = array.length -1 ; i >= 0 ; i -= 2 ) {
-        checkDigitFix.push(array[i]);
+
+    for (let i = 0 ; i < reversedCheckArray.length ; i += 2) { 
+        checkDigitFix.push(reversedCheckArray[i]);
     }
 
-    //filter element in array need to double
-    for (let j = 0 ; j < array.length ; j += 2) { 
-        
-        if (array[j] * 2 <= 9 ) {
-            checkDigitDouble.push(array[j] * 2);
-        } else if (array[j] * 2 > 9 ) { 
-            checkDigitDouble.push(array[j]*2 - 9)
+    for (let j = 1 ; j < reversedCheckArray.length ; j += 2) { 
+        if (reversedCheckArray[j] * 2 > 9 ) { 
+            checkDigitDouble.push(reversedCheckArray[j] * 2  - 9 )
+        } else if (reversedCheckArray[j] * 2 <= 9 ) { 
+            checkDigitDouble.push(reversedCheckArray[j] * 2 );
         }
     }
 
+
+
+   
     //combine two array
     let allCheckDigit = checkDigitFix.concat(checkDigitDouble); 
     
@@ -56,8 +62,9 @@ function validateCred(array) {
         return accumulator += item ;
     });
 
-   
+    console.log(sumOfCheckDigit);
 
+ 
     //determine sum is valid or invalid
     if (sumOfCheckDigit % 10 === 0) { 
         return true;
@@ -88,7 +95,7 @@ function findInvalidCards(arrays) {
 
 
 
-
+//Find the company name from card number 
 function idInvalidCardCompanies(arrays) { 
 
     let companies = [];
@@ -125,18 +132,127 @@ function idInvalidCardCompanies(arrays) {
 
 
 
+//Task 7.2
+//Convert string to card array 
+function convertToArray (string) { 
+
+    let newArray = Array.from(String(string));
+
+    return newArray;
+
+}
+
+
+
+//task 7.3
+// Make invalid number to become valid
+
+function changeInvalidToValid (array){
+
+//console.log(array);
+
+    console.log(array);
+
+    const reversedCheckArray = array.toReversed();
+
+   // console.log(reversedCheckArray);
+
+    // this array is all the digit keep remain to add up
+    let checkDigitFix = []; 
+
+    // all digit need to double
+    let checkDigitDouble = [] ; 
+
+
+    for (let i = 0 ; i < reversedCheckArray.length ; i += 2) { 
+        checkDigitFix.push(reversedCheckArray[i]);
+    }
+
+    for (let j = 1 ; j < reversedCheckArray.length ; j += 2) { 
+        if (reversedCheckArray[j] * 2 > 9 ) { 
+            checkDigitDouble.push(reversedCheckArray[j] * 2  - 9 )
+        } else if (reversedCheckArray[j] * 2 <= 9 ) { 
+            checkDigitDouble.push(reversedCheckArray[j] * 2 );
+        }
+    }
+   
+    //combine two array
+    let allCheckDigit = checkDigitFix.concat(checkDigitDouble); 
+    
+    //sum the total value of array
+    let sumOfCheckDigit = allCheckDigit.reduce((accumulator, item) => {    
+        return accumulator += item ;
+    });
+
+   console.log(sumOfCheckDigit);
+
+    let arrayRemainder = sumOfCheckDigit % 10 ;
+    let adjustment = false;
+
+    if (arrayRemainder !== 0) { 
+        for (let h = array.length - 1 ; h >= 0 ; h -= 2) { 
+            if (array[h] -  arrayRemainder >= 0) { 
+                array[h] -= arrayRemainder ;
+                adjustment = true;
+                break;
+            } 
+        }
+    }
+
+    if (!adjustment) { 
+
+
+
+    }
+
+    console.log(array);
+
+
+    return array;
+}
 
 
 
 
 
 
+
+
+
+
+
+//------------------------------------------------------------------------
 
 
 //Testing
+
+
 //validateCred(valid3);
-//console.log(validateCred(valid3));
+//console.log(validateCred(invalid5));
 //findInvalidCards(batch);
 //console.log(findInvalidCards(batch));
 //console.log(JSON.stringify(findInvalidCards(batch)));
-console.log(idInvalidCardCompanies(findInvalidCards(batch)));
+//console.log(idInvalidCardCompanies(findInvalidCards(batch)));
+
+//Task 7.1 use different credit card number
+/*
+//let testarray01 = Array.from(String(4917662640631538));
+//console.log(testarray01);
+
+//console.log(validateCred(testarray01));
+*/
+
+//Task 7.2 testing
+//console.log(convertToArray('4917662640631538'));
+
+
+//task 7.3 testing
+//console.log(validateCred(testing01));
+
+
+
+changeInvalidToValid(invalid1);
+
+let updatedNumber = changeInvalidToValid(invalid1) ;
+console.log(validateCred(updatedNumber));
+
